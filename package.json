@@ -1,7 +1,7 @@
 {
   "name": "test_ext_release",
   "displayName": "Test ext release",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A basic Plasmo extension.",
   "author": "Plasmo Corp. <foss@plasmo.com>",
   "scripts": {
@@ -26,7 +26,7 @@
   "manifest": {
     "host_permissions": [
       "https://*/*"
-    ]
-  },
-  "update_url": "https://github.com/evolyx-dev/test_ext_release/latest/download/update.xml"
+    ],
+    "update_url": "https://github.com/evolyx-dev/test_ext_release/releases/latest/download/update.xml"
+  }
 }
