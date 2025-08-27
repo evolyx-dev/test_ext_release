@@ -15,31 +15,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm'
+          cache: 'npm' # Use npm cache, based on package-lock.json
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        # 'npm ci' is the recommended command for CI. It's faster and safer.
+        # It requires a package-lock.json file to be present.
+        run: npm ci
 
       - name: Build the extension with Plasmo
-        run: pnpm plasmo build --zip
+        # This runs the "build" script from your package.json
+        run: npm run build
 
       - name: Unzip the extension for packaging
         run: unzip ./build/chrome-mv3-archive.zip -d ./build/chrome-mv3-unzipped
 
       - name: Get Version from Tag
-        id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
-      # --- Start of New Packaging Steps ---
       - name: Install Google Chrome
         run: |
           sudo apt-get update
@@ -51,12 +47,10 @@ jobs:
 
       - name: Package Extension using Google Chrome CLI
         run: |
-          # The output .crx file will be created in the parent directory (`./build`)
           /usr/bin/google-chrome --pack-extension=./build/chrome-mv3-unzipped --pack-extension-key=key.pem
           
       - name: Rename CRX file
         run: mv ./build/chrome-mv3-unzipped.crx extension.crx
-      # --- End of New Packaging Steps ---
 
       - name: Generate update.xml
         run: |

@@ -1,12 +1,12 @@
 {
   "name": "test_ext_release",
   "displayName": "Test ext release",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A basic Plasmo extension.",
   "author": "Plasmo Corp. <foss@plasmo.com>",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build",
+    "build": "plasmo build --zip",
     "package": "plasmo package"
   },
   "dependencies": {
