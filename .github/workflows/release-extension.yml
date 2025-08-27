@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Unzip the extension for packaging
-        run: unzip ./build/chrome-mv3-archive.zip -d ./build/chrome-mv3-unzipped
+        run: unzip ./build/chrome-mv3-prod.zip -d ./build/chrome-mv3-unzipped
 
       - name: Get Version from Tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
