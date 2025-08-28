@@ -19,18 +19,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # Use npm cache, based on package-lock.json
+          cache: 'npm'
 
       - name: Install dependencies
-        # 'npm ci' is the recommended command for CI. It's faster and safer.
-        # It requires a package-lock.json file to be present.
         run: npm ci
 
       - name: Build the extension with Plasmo
-        # This runs the "build" script from your package.json
+        # This creates build/chrome-mv3-archive.zip
         run: npm run build
 
-      - name: Unzip the extension for packaging
+      - name: Unzip the extension for CRX packaging
         run: unzip ./build/chrome-mv3-prod.zip -d ./build/chrome-mv3-unzipped
 
       - name: Get Version from Tag
@@ -66,6 +64,8 @@ jobs:
           files: |
             extension.crx
             update.xml
+            ./build/chrome-mv3-prod.zip # <--- ADD THIS LINE
+
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: "New release of the extension."
