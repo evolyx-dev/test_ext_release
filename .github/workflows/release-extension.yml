@@ -1,5 +1,4 @@
 name: Release Plasmo Extension
-
 on:
   push:
     tags:
@@ -25,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Build the extension with Plasmo
-        # This creates build/chrome-mv3-archive.zip
+        # This creates build/chrome-mv3-prod.zip
         run: npm run build
 
       - name: Unzip the extension for CRX packaging
@@ -64,8 +63,7 @@ jobs:
           files: |
             extension.crx
             update.xml
-            ./build/chrome-mv3-prod.zip # <--- ADD THIS LINE
-
+            ./build/chrome-mv3-prod.zip
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: "New release of the extension."
